@@ -1,0 +1,29 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <img *ngIf="playlistDetails?.coverUrl" [src]="playlistDetails.coverUrl" alt="{{ playlistDetails?.title }}" height="48" width="48">
+        <span *ngIf="playlistDetails">{{ playlistDetails.title }}</span>
+      </div>
+      <span class="fill-space"></span>
+      <span *ngIf="playlistDetails">
+        <span>{{ playlistDetails.creator.name }}</span>
+        <span>&nbsp;-&nbsp;</span>
+        <span>{{ formatDuration(playlistDetails.duration) }}</span>
+      </span>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-grid-list cols="3" gutterSize="2px">
+    <mat-grid-tile *ngFor="let track of allData">
+        <mat-card style="width: 80%; height: 80%;">
+            <img mat-card-image [src]="track.picture" alt="{{ track.title }}">
+            <mat-card-header>
+                <mat-card-title>{{ track.title }}</mat-card-title>
+                <mat-card-subtitle>{{ track.artist.name }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                {{ formatDuration(track.duration) }}
+            </mat-card-content>
+        </mat-card>
+    </mat-grid-tile>
+</mat-grid-list>  

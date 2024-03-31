@@ -1,0 +1,15 @@
+<mat-grid-list cols="3" gutterSize="10px">
+    <mat-grid-tile *ngFor="let play of playlist" (click)="openPlaylistDetail(play.id)">
+      <mat-card style="width: 100%; height: 100%;">
+        <img mat-card-image [src]="play.picture" alt="{{ play.title }}">
+        <mat-card-header>
+          <mat-card-title>{{ play.title }}</mat-card-title>
+          <mat-card-subtitle>{{ play.subtitle }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          {{ play.description }}
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+  
