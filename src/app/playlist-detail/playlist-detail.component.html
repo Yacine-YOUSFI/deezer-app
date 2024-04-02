@@ -14,16 +14,15 @@
 </mat-toolbar>
 
 <mat-grid-list cols="3" gutterSize="2px">
-    <mat-grid-tile *ngFor="let track of allData">
-        <mat-card style="width: 80%; height: 80%;">
-            <img mat-card-image [src]="track.picture" alt="{{ track.title }}">
-            <mat-card-header>
-                <mat-card-title>{{ track.title }}</mat-card-title>
-                <mat-card-subtitle>{{ track.artist.name }}</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                {{ formatDuration(track.duration) }}
-            </mat-card-content>
-        </mat-card>
-    </mat-grid-tile>
-</mat-grid-list>  
+  <mat-grid-tile *ngFor="let track of allData">
+    <mat-card style="width: 80%; height: 80%; display: flex; flex-direction: column;">
+      <mat-card-header>
+        <mat-card-title>{{ track.title }}</mat-card-title>
+        <mat-card-subtitle>{{ track.artist.name }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-footer style="margin-top: auto;">
+        {{ formatDuration(track.duration) }}
+      </mat-card-footer>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

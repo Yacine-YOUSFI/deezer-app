@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { PlayListService } from '../services/playlis.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @Component({
@@ -12,7 +13,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
   selector: 'app-playlist-detail',
   templateUrl: './playlist-detail.component.html',
   styleUrls: ['./playlist-detail.component.css'],
-  imports: [MatToolbarModule, CommonModule, MatCardModule, MatGridListModule],
+  imports: [MatToolbarModule, CommonModule, MatCardModule, MatGridListModule, HttpClientModule],
 })
 export class PlaylistDetailComponent implements OnInit {
   playlistId: string = '';
@@ -24,7 +25,7 @@ export class PlaylistDetailComponent implements OnInit {
   allDataLoaded: boolean = false;
   tracksLength: number = 0;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private route: ActivatedRoute, private playListService: PlayListService) { }
   
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -41,6 +42,7 @@ export class PlaylistDetailComponent implements OnInit {
   }
 
   /**
+   * Load more data when scroll
    * 
    * @returns 
    */
@@ -60,27 +62,27 @@ export class PlaylistDetailComponent implements OnInit {
           break;
         }
       }
-      
       this.startIndex += this.pageSize;
       this.loading = false;
     }, 1000);
   }
 
   /**
+   * Function that allows to get detail of playlist
    * 
    * @param id 
    */
   fetchPlaylistDetails(id: string): void {
-    this.http.get<any>(`http://localhost:8000/detail/${id}`).subscribe(
-      (playlist) => {
-        this.playlistDetails = playlist;
-        this.allData = playlist.tracks.data;
-        this.tracksLength = this.allData.length;
+    this.playListService.getDetailsPlayList(id).subscribe({
+      next: (playlist: any) => {
+        this.playlistDetails = playlist ? playlist : [];
+        this.allData = playlist?.tracks?.data;
+        this.tracksLength = this.allData?.length;
       },
-      (error) => {
-        console.error('Failed to fetch playlist details:', error);
+      error: (error) => {
+        console.error(error);
       }
-    );
+    });
   }
 
   /**

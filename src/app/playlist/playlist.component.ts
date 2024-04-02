@@ -1,10 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { PlaylistResponse } from '../models/PlaylistResponse';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { PlayListService } from '../services/playlis.service';
 
 @Component({
   selector: 'app-playlist',
@@ -17,16 +16,20 @@ export class PlaylistComponent {
 
   playlist: any[] = [];
 
-  constructor(private router: Router,  private http: HttpClient) {}
+  constructor(private router: Router,  private playListService: PlayListService) {}
 
   ngOnInit(): void {
-    this.http.get<PlaylistResponse>('http://localhost:8000/all').subscribe(response => {
-      this.playlist = response.data;
+    this.playListService.getListPlayList().subscribe({
+      next: (datas: any) => {
+        this.playlist = datas?.data;
+      },
+      error: (error) => {
+        console.error(error);
+      }
     });
   }
 
   openPlaylistDetail(id: string) {
-    this.router.navigate(['/playlist', id]);
+    this.router.navigate(['/playlists', id]);
   }
-
 }

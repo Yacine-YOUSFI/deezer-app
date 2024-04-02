@@ -1,26 +1,3 @@
 mat-grid-tile {
     background: rgb(229, 239, 242);
 }
-
-.example-card {
-max-width: 400px;
-}
-
-.example-header-image {
-background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-background-size: cover;
-}
-
-.mat-grid-list {
-    width: 100%;
-  }
-  
-  .mat-grid-tile {
-    width: calc(33.33% - 20px); /* Chaque tuile occupe un tiers de la largeur de la grille (avec un espace de 10px entre les tuiles) */
-    margin: 10px; /* Espacement entre les tuiles */
-    box-sizing: border-box; /* Inclure les bordures et le padding dans la largeur déclarée */
-  }
-
-.mat-card {
-    width: 100%; /* La carte occupe toute la largeur de la tuile */
-}
